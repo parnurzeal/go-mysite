@@ -1,0 +1,17 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Page	main.go	/^type Page struct {$/;"	d
+editHandler	main.go	/^func editHandler(w http.ResponseWriter, r *http.Request, title string) {$/;"	d
+loadPage	main.go	/^func loadPage(title string) (*Page, error) {$/;"	d
+main	main.go	/^func main() {$/;"	d
+makeHandler	main.go	/^func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.HandlerFunc {$/;"	d
+renderTemplate	main.go	/^func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {$/;"	d
+save	main.go	/^func (p *Page) save() error {$/;"	d
+saveHandler	main.go	/^func saveHandler(w http.ResponseWriter, r *http.Request, title string) {$/;"	d
+templates	main.go	/^var templates = template.Must(template.ParseFiles("edit.html", "view.html"))$/;"	d
+validPath	main.go	/^var validPath = regexp.MustCompile("^\/(edit|save|view)\/([a-zA-Z0-9]+)$")$/;"	d
+viewHandler	main.go	/^func viewHandler(w http.ResponseWriter, r *http.Request, title string) {$/;"	d

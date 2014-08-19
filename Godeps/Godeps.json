@@ -1,0 +1,5 @@
+{
+	"ImportPath": "github.com/parnurzeal/go-mysite",
+	"GoVersion": "go1.3",
+	"Deps": []
+}
