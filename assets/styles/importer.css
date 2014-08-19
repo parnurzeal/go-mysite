@@ -1,0 +1,54 @@
+/**
+ * importer.less
+ *
+ * By default, new Sails projects are configured to compile this file
+ * from LESS to CSS.  Unlike CSS files, LESS files are not compiled and
+ * included automatically unless they are imported below.
+ *
+ * The LESS files imported below are compiled and included in the order
+ * they are listed.  Mixins, variables, etc. should be imported first
+ * so that they can be accessed by subsequent LESS stylesheets.
+ *
+ * (Just like the rest of the asset pipeline bundled in Sails, you can
+ * always omit, customize, or replace this behavior with SASS, SCSS,
+ * or any other Grunt tasks you like.)
+ */
+/************
+ * COLORS
+ ************/
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+a.mytitle {
+  color: black;
+  text-decoration: none;
+}
+a.mytitle:hover {
+  text-decoration: none;
+}
+.navbar-nav > li > a {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+.navbar {
+  min-height: 40px !important;
+}
+.navbar-social-icon > li > a {
+  padding: 5px !important;
+}
+.navbar-social-icon > li > a:hover > i.fa-twitter-square {
+  color: #33ccff;
+}
+.navbar-social-icon > li > a:hover > i.fa-facebook-square {
+  color: #3b5998;
+}
+.navbar-social-icon > li > a:hover > i.fa-google-plus-square {
+  color: #d16565;
+}
+.navbar-social-icon > li > a:hover > i.fa-linkedin-square {
+  color: #4875b4;
+}
+.navbar-social-icon > li > a:hover > i.fa-github {
+  color: black;
+}

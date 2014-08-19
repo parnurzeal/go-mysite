@@ -9,9 +9,11 @@ editHandler	main.go	/^func editHandler(w http.ResponseWriter, r *http.Request, t
 loadPage	main.go	/^func loadPage(title string) (*Page, error) {$/;"	d
 main	main.go	/^func main() {$/;"	d
 makeHandler	main.go	/^func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.HandlerFunc {$/;"	d
+makeLayout	main.go	/^func makeLayout(w http.ResponseWriter, r *http.Request) {$/;"	d
 renderTemplate	main.go	/^func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {$/;"	d
+renderTemplate2	main.go	/^func renderTemplate2(w http.ResponseWriter, tmpl string) {$/;"	d
 save	main.go	/^func (p *Page) save() error {$/;"	d
 saveHandler	main.go	/^func saveHandler(w http.ResponseWriter, r *http.Request, title string) {$/;"	d
-templates	main.go	/^var templates = template.Must(template.ParseFiles("edit.html", "view.html"))$/;"	d
-validPath	main.go	/^var validPath = regexp.MustCompile("^\/(edit|save|view)\/([a-zA-Z0-9]+)$")$/;"	d
+templates	main.go	/^var templates = template.Must(template.ParseFiles("edit.html", "view.html", "layout.html"))$/;"	d
+validPath	main.go	/^var validPath = regexp.MustCompile("(^\/(resume)\/([a-zA-Z0-9]+)$)|^\/$|^$")$/;"	d
 viewHandler	main.go	/^func viewHandler(w http.ResponseWriter, r *http.Request, title string) {$/;"	d

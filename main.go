@@ -1,7 +1,7 @@
 package main
 
 import (
-	"flag"
+	"fmt"
 	"io/ioutil"
 	"os"
 
@@ -10,8 +10,8 @@ import (
 	"text/template"
 )
 
-var templates = template.Must(template.ParseFiles("edit.html", "view.html"))
-var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9]+)$")
+var templates = template.Must(template.ParseFiles("edit.html", "view.html", "layout.html"))
+var validPath = regexp.MustCompile("(^/(resume)/([a-zA-Z0-9]+)$)|^/$|^$")
 
 type Page struct {
 	Title string
@@ -77,12 +77,33 @@ func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
 	}
 	http.Redirect(w, r, "/view/"+title, http.StatusFound)
 }
+func makeLayout(w http.ResponseWriter, r *http.Request) {
+	m := validPath.FindStringSubmatch(r.URL.Path)
+	fmt.Println(m)
+	if m == nil {
+		http.NotFound(w, r)
+		return
+	} else {
+		if m[0] == "" {
+			renderTemplate2(w, "views/homepage.html")
+		} else {
+			renderTemplate2(w, "views/"+m[0])
+		}
+	}
+}
+
+func renderTemplate2(w http.ResponseWriter, tmpl string) {
+
+	err := templates.ExecuteTemplate(w, "layout.html", nil)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
 
 func main() {
-	flag.Parse()
-	http.HandleFunc("/view/", makeHandler(viewHandler))
-	http.HandleFunc("/edit/", makeHandler(editHandler))
-	http.HandleFunc("/save/", makeHandler(saveHandler))
+	http.HandleFunc("/", makeLayout)
+	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
 	err := http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 	if err != nil {
 		panic(err)
