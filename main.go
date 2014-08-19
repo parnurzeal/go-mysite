@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
 	"os"
 
@@ -15,7 +14,6 @@ var validPath = regexp.MustCompile("^/(resume|portfolio|photos)|^/$|^$")
 
 func makeLayout(w http.ResponseWriter, r *http.Request) {
 	m := validPath.FindStringSubmatch(r.URL.Path)
-	fmt.Println(r.URL.Path, m)
 	if m == nil {
 		http.NotFound(w, r)
 		return
