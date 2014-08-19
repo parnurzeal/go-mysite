@@ -11,11 +11,11 @@ import (
 )
 
 var templates = template.Must(template.ParseFiles("layout.html"))
-var validPath = regexp.MustCompile("(^/(resume)/([a-zA-Z0-9]+)$)|^/$|^$")
+var validPath = regexp.MustCompile("^/(resume|portfolio|photos)|^/$|^$")
 
 func makeLayout(w http.ResponseWriter, r *http.Request) {
 	m := validPath.FindStringSubmatch(r.URL.Path)
-	fmt.Println(m)
+	fmt.Println(r.URL.Path, m)
 	if m == nil {
 		http.NotFound(w, r)
 		return
@@ -23,7 +23,7 @@ func makeLayout(w http.ResponseWriter, r *http.Request) {
 		if m[0] == "" || m[0] == "/" {
 			renderTemplate(w, "views/homepage.html")
 		} else {
-			renderTemplate(w, "views/"+m[1])
+			renderTemplate(w, "views/"+m[1]+".html")
 		}
 	}
 }
