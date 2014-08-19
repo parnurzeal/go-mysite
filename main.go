@@ -3,15 +3,11 @@ package main
 import (
 	"flag"
 	"io/ioutil"
-	"log"
-	"net"
+	"os"
+
 	"net/http"
 	"regexp"
 	"text/template"
-)
-
-var (
-	addr = flag.Bool("addr", false, "find open address and print to final-port.txt")
 )
 
 var templates = template.Must(template.ParseFiles("edit.html", "view.html"))
@@ -87,19 +83,8 @@ func main() {
 	http.HandleFunc("/view/", makeHandler(viewHandler))
 	http.HandleFunc("/edit/", makeHandler(editHandler))
 	http.HandleFunc("/save/", makeHandler(saveHandler))
-	if *addr {
-		l, err := net.Listen("tcp", "127.0.0.1:0")
-		if err != nil {
-			log.Fatal(err)
-		}
-		err = ioutil.WriteFile("final-port.txt", []byte(l.Addr().String()), 0644)
-		if err != nil {
-			log.Fatal(err)
-		}
-		s := &http.Server{}
-		s.Serve(l)
-		return
+	err := http.ListenAndServe(":"+os.Getenv("PORT"), nil)
+	if err != nil {
+		panic(err)
 	}
-	http.ListenAndServe(":8080", nil)
-
 }
