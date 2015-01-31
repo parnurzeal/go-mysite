@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>New Sails App</title>
+    <!-- Viewport mobile tag for sensible mobile support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="dist/css/vendor/bootstrap.min.css" rel="stylesheet">
+     <link href="dist/css/flat-ui.min.css" rel="stylesheet">
+  </head>
+
+  <body style="background-color:#1ABC9C">
+    <style>
+    .headline{
+      padding: 50px 0 30px;
+    }
+    .libSlot-wrapper{
+      overflow:hidden;
+      display: inline-block;
+    }
+    ul#number {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        font-size: 100px;
+        height: 170px;
+    }
+    </style>
+
+    <div class="container" style="padding: 50px 0 30px 0;">
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4" >
+          <div class="tile">
+            <div class="headline">
+              <img src="dist/img/icons/svg/gift-box.svg" alt="Gift-Box">
+              <h1>Lucky Time!</h1>
+            </div>
+            <div class="panel panel-default">
+            <ul id="number" class="slot">
+              <!--<% for(var i=1; i<=999; i++) {%>
+                 <li><%= i %></li>
+                 <% } %>-->
+            </ul>
+            </div>
+          <button type="buton" id="playBtn" class="btn btn-block btn-lg btn-primary">Ann <span class="fui-heart"></span> Phat</button>
+          </div>
+        </div>
+        <div class="col-md-4"></div>
+      </div>
+
+    </div>
+    <!--TEMPLATES-->
+
+    <!--TEMPLATES END-->
+    <!--<script type="text/javascript" src="ejs_production.js"></script>-->
+    <!--SCRIPTS-->
+    <script src="js/jquery-1.7.1.js"></script>
+    <script src="js/jquery.easing.1.3.js" charset="utf-8"></script>
+    <!--SCRIPTS END-->
+    <script src="dist/js/vendor/video.js"></script>
+    <script src="dist/js/flat-ui.min.js"></script>
+    <script type="text/javascript">
+      (function($){
+        $.libSlot = function(el,options){
+          var base = this;
+          base.options = options;
+          base.$el = $(el);
+          base.el = el;
+          var $list = base.$el;
+          var $li = $list.find('li').first();
+
+          base.$liHeight = $li.outerHeight();
+          base.$liWidth = $li.outerWidth();
+          base.liCount = $list.children().length;
+          base.listHeight = base.liCount* base.$liHeight;
+
+          base.spinSpeed = 0;
+          base.increment = 200;
+
+          $list.css('position','relative');
+          // add first one, so when we rotate, it will look like really rotate back to the beginning
+          $li.clone().appendTo($list);
+          base.$wrapper = $list.wrap('<div class="libSlot-wrapper"></div>').parent();
+          // set wrap to li height
+          //base.$wrapper.css('height',base.$liHeight);
+          base.trigger = function() {
+            if(!base.isSpin){
+              base.isSpin=true;
+              base.startSpin();
+            }else{
+              base.isSpin=false;
+            }
+          };
+          // one rotation
+          base.startSpin = function(){
+            base.isSpin = true;
+            $list.css('top',-base.listHeight).animate({'top':'0px'},'slow','swing',function(){
+                  if(base.isSpin){
+                    base.startSpin();
+                  }else{
+                    base.stopSpin();
+                  }
+                });
+          };
+          base.stopSpin = function(){
+            var endNum = Math.floor( Math.random() * (base.liCount) );
+            var finalPos = -( base.$liHeight * (endNum));
+            var finalSpeed = base.spinSpeed*0.5*base.liCount/endNum;
+            $list.css('top',-base.listHeight).animate({'top':finalPos},'slow','swing',function(){
+                  console.log('stop stop!');
+                });
+          };
+          // bind event
+          $(base.options.spinner).bind(base.options.spinEvent, function(event){
+              base.trigger();
+              });
+
+        };
+
+        // declare new function in jquery
+        $.fn.libSlot = function(options){
+          new $.libSlot(this, options);
+        };
+      })(jQuery);
+      function getParameterByName(name) {
+          name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+          var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+              results = regex.exec(location.search);
+          return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+      }
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+          var maxnum = getParameterByName('maxnum');
+          for(var i = 1;i<=maxnum;i++){
+            $( ".slot" ).append("<li>"+i+"</li>");
+          }
+          $('.slot').libSlot({
+            spinner: '#playBtn',
+            spinEvent: 'click'
+          });
+        });
+    </script>
+
+  </body>
+</html>
